@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.easy.weather.api.ApiManager;
@@ -37,7 +38,7 @@ public class WeatherFragment extends BaseFragment {
 	private AqiView mAqiView;
 	private AstroView mAstroView;
 	private Area mArea;
-//	private ScrollView mScrollView;
+	private ScrollView mScrollView;
 	private Type mDrawerType = Type.UNKNOWN_D;
 
 	public Type getDrawerType() {
@@ -82,12 +83,6 @@ public class WeatherFragment extends BaseFragment {
 		super.onSaveInstanceState(outState);
 	}
 
-	/**
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
-	 */
 	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,9 +91,9 @@ public class WeatherFragment extends BaseFragment {
 			mDailyForecastView = (DailyForecastView) mRootView.findViewById(R.id.w_dailyForecastView);
 			pullRefreshLayout = (PullRefreshLayout) mRootView.findViewById(R.id.w_PullRefreshLayout);
 			mHourlyForecastView = (HourlyForecastView) mRootView.findViewById(R.id.w_hourlyForecastView);
-//			mAqiView = (AqiView) mRootView.findViewById(R.id.w_aqi_Aqiview);
+			mAqiView = (AqiView) mRootView.findViewById(R.id.w_aqi_view);
 			mAstroView = (AstroView) mRootView.findViewById(R.id.w_astroView);
-//			mScrollView = (ScrollView) mRootView.findViewById(R.id.w_WeatherScrollView);
+			mScrollView = (ScrollView) mRootView.findViewById(R.id.w_WeatherScrollView);
 			pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
 				@Override
 				public void onRefresh() {
@@ -121,19 +116,17 @@ public class WeatherFragment extends BaseFragment {
 					});
 				}
 			});
-			debug();
+//			debug();
 			if(mWeather != null){
 				updateWeatherUI();
 			}
 		} else {
-//			UiUtil.toastDebug(getActivity(), "mRootView is not null, just use it");
-//			mScrollView.post(new Runnable() {
-//				@Override
-//				public void run() {
-//					mScrollView.scrollTo(0, 0);
-//				}
-//			});
-			
+			mScrollView.post(new Runnable() {
+				@Override
+				public void run() {
+					mScrollView.scrollTo(0, 0);
+				}
+			});
 		}
 		return mRootView;
 	}
@@ -167,7 +160,6 @@ public class WeatherFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		fetchArguments();
-		UiUtil.logDebug("FUCK", "onActivityCreated");
 		if (this.mArea == null) {
 			return;
 		}
@@ -181,7 +173,6 @@ public class WeatherFragment extends BaseFragment {
 	}
 	
 	private void debug(){
-		// DEBUG///////////////
 				if (WeatherApplication.DEBUG) {
 					mRootView.findViewById(R.id.w_WeatherLinearLayout).setOnClickListener(new View.OnClickListener() {
 						@Override
@@ -214,41 +205,10 @@ public class WeatherFragment extends BaseFragment {
 						}
 					});
 				}
-//					mDailyForecastView.setOnClickListener(new View.OnClickListener() {
-//						@Override
-//						public void onClick(View v) {
-//							ApiManager.loadAreaData(getActivity(), new ApiManager.LoadAreaDataListener() {
-//								@Override
-//								public void onLoaded(final AreaData areaData) {
-//									AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//									builder.setTitle("AreaList");
-//									builder.setAdapter(new ArrayAdapter<Area>(getActivity(),
-//											android.R.layout.simple_list_item_1, areaData.list),
-//											new DialogInterface.OnClickListener() {
-//												@Override
-//												public void onClick(DialogInterface dialog, int which) {
-//													final Area a = areaData.list.get(which);
-//													mArea = a;
-//													postRefresh();
-//												}
-//											});
-//									builder.setPositiveButton("ok", null);
-//									builder.create().show();
-//									toast("size->" + areaData.list.size());
-//								}
-		//
-//								@Override
-//								public void onError() {
-		//
-//								}
-//							});
-//						}
-//					});
 	}
 
 	private void postRefresh() {
 		if (pullRefreshLayout != null) {
-//			UiUtil.toastDebug(getActivity(), mArea.name_cn + "postRefresh");
 			Activity activity = getActivity();
 			if(activity != null){
 				if(WeatherNetworkUtil.isNetworkAvailable(activity))
@@ -269,21 +229,13 @@ public class WeatherFragment extends BaseFragment {
 		if (isVisibleToUser) {
 			checkRefresh();
 		}
-//		else{
-//			if(mDailyForecastView!=null){
-//				mDailyForecastView.resetAnimation();
-//			}
-//		}
-		
 	}
 
 	private void checkRefresh() {
 		if (mArea == null) {
 			return;
 		}
-		// toast(mArea.name_cn + "checkRefresh");
 		if (getUserVisibleHint()) {
-			// updateDrawerTypeAndNotify();
 			if (ApiManager.isNeedUpdate(mWeather)) {
 				postRefresh();
 			}
@@ -291,7 +243,6 @@ public class WeatherFragment extends BaseFragment {
 	}
 
 	private void updateWeatherUI() {
-//		UiUtil.toastDebug(getActivity(),getCityName()+ "updateWeatherUI");
 		if (!ApiManager.acceptWeather(mWeather)) {
 			return;
 		}
@@ -305,7 +256,6 @@ public class WeatherFragment extends BaseFragment {
 			mHourlyForecastView.setData(weather);
 			mAqiView.setData(w.aqi);
 			mAstroView.setData(weather);
-			// setTextViewString(R.id.w_city, w.basic.city);
 			final String tmp = w.now.tmp;
 			try {
 				final int tmp_int = Integer.valueOf(tmp);
@@ -332,18 +282,10 @@ public class WeatherFragment extends BaseFragment {
 
 			setTextViewString(R.id.w_todaydetail_bottomline,  w.now.cond.txt + "  " + mWeather.getTodayTempDescription());
 			setTextViewString(R.id.w_todaydetail_temp, w.now.tmp + "°");
-//			try {
-//				((ImageView)mRootView.findViewById(R.id.w_todaydetail_cond_imageview))
-//					.setImageResource(getCondIconDrawableId(mWeather));
-//			} catch (Exception e) {
-//			}
 
 			setTextViewString(R.id.w_now_fl, w.now.fl + "°");
 			setTextViewString(R.id.w_now_hum, w.now.hum + "%");// 湿度
 			setTextViewString(R.id.w_now_vis, w.now.vis + "km");// 能见度
-			// setTextViewString(R.id.w_now_wind_dir, w.now.wind.dir);
-			// setTextViewString(R.id.w_now_wind_sc, w.now.wind.sc);
-			// setTextViewString(R.id.w_now_pres, w.now.pres);
 			setTextViewString(R.id.w_now_pcpn, w.now.pcpn + "mm"); // 降雨量
 
 			if (weather.hasAqi()) {
@@ -379,26 +321,10 @@ public class WeatherFragment extends BaseFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 			toast(mArea.name_cn + " Error\n" + e.toString());
-
 		}
-
 	}
-
-	@Override
-	public void onDestroy() {
-		// textviews.clear();
-		super.onDestroy();
-	}
-
-	// private SparseArray<TextView> textviews = new SparseArray<TextView>();
 
 	private void setTextViewString(int textViewId, String str) {
-		// TextView tv = textviews.get(textViewId);
-		// if(tv == null){
-		// tv = (TextView) mRootView.findViewById(textViewId);
-		// textviews.put(textViewId, tv);
-		// }
-		// tv.setText(str);
 		TextView tv = (TextView) mRootView.findViewById(textViewId);
 		if (tv != null) {
 			tv.setText(str);
@@ -504,7 +430,6 @@ public class WeatherFragment extends BaseFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return R.drawable.cond_icon_na;
 	}
 }

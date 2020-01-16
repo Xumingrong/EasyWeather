@@ -36,14 +36,12 @@ import com.easy.weather.api.ApiManager.Area;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar toolbar;//状态栏
     private WeatherViewPager viewPager;//viewPager
     private FloatingActionButton fab;//悬浮键
     private DrawerLayout drawer;
     private NavigationView navigationView;//侧边栏
 
     public static Typeface typeface;
-
     public static Typeface getTypeface(Context context) {
         return typeface;
     }
@@ -65,18 +63,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
         viewPager = (WeatherViewPager) findViewById(R.id.main_viewpager);
         weatherView = (DynamicWeatherView) findViewById(R.id.main_dynamicweatherview);
         fab = findViewById(R.id.fab);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         if (typeface == null) {
             typeface = Typeface.createFromAsset(getAssets(), "fonts/mxx_font2.ttf");
@@ -138,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadAreaToViewPager() {
         final ArrayList<Area> selectedAreas = ApiManager.loadSelectedArea(this);
-        final BaseFragment[] fragments = new BaseFragment[selectedAreas.size() + 1];
+        final BaseFragment[] fragments = new BaseFragment[selectedAreas.size()];
         for (int i = 0; i < selectedAreas.size(); i++) {
             final Area area = selectedAreas.get(i);
             fragments[i] = WeatherFragment.makeInstance(area, ApiManager.loadWeather(this, area.id));
@@ -157,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         position).getDrawerType());
             }
         });
-        viewPager.setCurrentItem(1, false);
+        viewPager.setCurrentItem(0, false);
     }
 
     public void updateCurDrawerType() {

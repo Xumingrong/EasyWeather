@@ -58,15 +58,15 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 
 	private WeakReference<PagerAdapter> mWatchingAdapter;
 
-	private static final int[] ATTRS = new int[] { android.R.attr.textAppearance, android.R.attr.textSize,
-			android.R.attr.textColor, android.R.attr.gravity };
+	private static final int[] ATTRS = new int[]{android.R.attr.textAppearance, android.R.attr.textSize,
+			android.R.attr.textColor, android.R.attr.gravity};
 
-	private static final int[] TEXT_ATTRS = new int[] { 0x0101038c // android.R.attr.textAllCaps
+	private static final int[] TEXT_ATTRS = new int[]{0x0101038c // android.R.attr.textAllCaps
 	};
 
 	private static final float SIDE_ALPHA = 0.6f;// wangbin changed this
 	private static final int TEXT_SPACING = 0;// //16; // dip 这个是每个TextView的间隔
-												// wangbin changed this
+	// wangbin changed this
 
 	private int mNonPrimaryAlpha;
 	int mTextColor;
@@ -109,7 +109,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 	public WeatherPagerTitleStrip(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		
+
 		addView(mPrevText = new TextView(context));
 		addView(mCurrText = new TextView(context));
 		addView(mNextText = new TextView(context));
@@ -164,7 +164,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 		addView(mCircleIndicator);
 	}
 
-	private class CircleIndicator extends View implements WeatherViewPager.OnPageChangeListener{
+	private class CircleIndicator extends View implements WeatherViewPager.OnPageChangeListener {
 
 		// FOR circleIndicator config//////////
 		private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -208,17 +208,17 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 				}
 			});
 		}
-		
-		public void setItemCount(int itemCount){
+
+		public void setItemCount(int itemCount) {
 			mItemCount = itemCount;
 			invalidate();
 		}
 
-		
-		
+
 		public int geIndicatorHeight() {
 			return (int) (mIndicatorRadius * 2f + 0.5f);
 		}
+
 		@Override
 		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -227,10 +227,12 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 			final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 			setMeasuredDimension(widthSize, geIndicatorHeight());
 		}
+
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 			trigger(position, positionOffset);
 		}
+
 		@Override
 		public void onPageSelected(int position) {
 			trigger(position, 0);
@@ -240,20 +242,21 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 		public void onPageScrollStateChanged(int state) {
 //			Log.e("CircleIndicator", "onPageScrollStateChanged()->" + state );
 			switch (state) {
-			case WeatherViewPager.SCROLL_STATE_IDLE:
-				hideSelf();
-				break;
-			default:
-				showSelf();
-				break;
+				case WeatherViewPager.SCROLL_STATE_IDLE:
+					hideSelf();
+					break;
+				default:
+					showSelf();
+					break;
 			}
 		}
+
 		private void trigger(int position, float positionOffset) {
 			CircleIndicator.this.mCurItemPosition = position;
 			CircleIndicator.this.mCurItemPositionOffset = positionOffset;
 			invalidate();
 		}
-		
+
 		final int fadeDuration = 400;
 		boolean isShowing = true;
 
@@ -272,9 +275,10 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 				isShowing = true;
 			}
 		}
+
 		@Override
 		protected void onDraw(Canvas canvas) {
-			 
+
 			super.onDraw(canvas);
 			canvas.save();
 //			int sc = canvas
@@ -287,10 +291,10 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 			final int width = getWidth();
 			final int height = getHeight();
 //			Log.d("CircleIndicator", "onDraw()->" + mItemCount + " w->" + width + " h->" + height + " left" + getLeft() + " right" + getRight() +" t" + getTop() + " b" + getBottom());
-			final float oneCircleWidth = mIndicatorRadius * 2f + mIndicatorMargin ;
-			final float circleWidth = mItemCount * oneCircleWidth -  mIndicatorMargin;
+			final float oneCircleWidth = mIndicatorRadius * 2f + mIndicatorMargin;
+			final float circleWidth = mItemCount * oneCircleWidth - mIndicatorMargin;
 			canvas.translate((width - circleWidth) / 2f, height / 2f);
-			//画所有的圆形  
+			//画所有的圆形
 			mPaint.setStyle(Style.FILL);
 			mPaint.setColor(mIndicatorBackground);
 			for (int i = 0; i < mItemCount; i++) {
@@ -303,7 +307,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 //			canvas.drawLine(firstDotX, 0, firstDotX + mIndicatorRadius*2f, 0, mPaint);
 //			canvas.drawLine(firstDotX+ mIndicatorRadius, -mIndicatorRadius,
 //					firstDotX + mIndicatorRadius, mIndicatorRadius, mPaint);
-			
+
 			//画当前的圆
 			mPaint.setStyle(Style.FILL);
 			mPaint.setColor(mIndicatorSelectedBackground);
@@ -317,9 +321,8 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 
 	/**
 	 * Set the required spacing between title segments.
-	 * 
-	 * @param spacingPixels
-	 *            Spacing between each title displayed in pixels
+	 *
+	 * @param spacingPixels Spacing between each title displayed in pixels
 	 */
 	public void setTextSpacing(int spacingPixels) {
 		mScaledTextSpacing = spacingPixels;
@@ -335,9 +338,8 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 
 	/**
 	 * Set the alpha value used for non-primary page titles.
-	 * 
-	 * @param alpha
-	 *            Opacity value in the range 0-1f
+	 *
+	 * @param alpha Opacity value in the range 0-1f
 	 */
 	public void setNonPrimaryAlpha(float alpha) {
 		// mNonPrimaryAlpha = (int) (alpha * 255) & 0xFF;
@@ -351,9 +353,8 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 	 * Set the color value used as the base color for all displayed page titles.
 	 * Alpha will be ignored for non-primary page titles. See
 	 * {@link #setNonPrimaryAlpha(float)}.
-	 * 
-	 * @param color
-	 *            Color hex code in 0xAARRGGBB format
+	 *
+	 * @param color Color hex code in 0xAARRGGBB format
 	 */
 	public void setTextColor(int color) {
 		mTextColor = color;
@@ -366,16 +367,14 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 	/**
 	 * Set the default text size to a given unit and value. See
 	 * {@link TypedValue} for the possible dimension units.
-	 * 
+	 *
 	 * <p>
 	 * Example: to set the text size to 14px, use
 	 * setTextSize(TypedValue.COMPLEX_UNIT_PX, 14);
 	 * </p>
-	 * 
-	 * @param unit
-	 *            The desired dimension unit
-	 * @param size
-	 *            The desired size in the given units
+	 *
+	 * @param unit The desired dimension unit
+	 * @param size The desired size in the given units
 	 */
 	public void setTextSize(int unit, float size) {
 		mPrevText.setTextSize(unit, size);
@@ -386,9 +385,8 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 	/**
 	 * Set the {@link Gravity} used to position text within the title strip.
 	 * Only the vertical gravity component is used.
-	 * 
-	 * @param gravity
-	 *            {@link Gravity} constant for positioning title text
+	 *
+	 * @param gravity {@link Gravity} constant for positioning title text
 	 */
 	public void setGravity(int gravity) {
 		mGravity = gravity;
@@ -483,7 +481,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 			updateText(mPager.getCurrentItem(), newAdapter);
 			requestLayout();
 		}
-		
+
 	}
 
 	private int convertTextColor(float percent) {
@@ -508,7 +506,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 		} else {
 //			Log.d(TAG, "position->" + position + "  positionOffset->" + positionOffset);
 			float currPercent = positionOffset;// positionOffset=0.6
-												// 则currOffset=0.1
+			// 则currOffset=0.1
 			// boolean isOffsetAdding = (positionOffset -
 			// mLastKnownPositionOffset)>0f;//offset在增大
 			if (currPercent <= 0.5f) {// 边的在出现
@@ -520,7 +518,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 				// }
 
 			} else {// 边的在出现
-					// currPercent -= 0.5f;
+				// currPercent -= 0.5f;
 				mPrevText.setTextColor(convertTextColor(1f - currPercent));
 				mCurrText.setTextColor(convertTextColor(currPercent));
 				mNextText.setTextColor(convertTextColor(0));
@@ -550,13 +548,13 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 //		final int textPaddedLeft = paddingLeft + halfCurrWidth;
 //		final int textPaddedRight = paddingRight + halfCurrWidth;
 //		final int contentWidth = prevWidth + currWidth + nextWidth;// stripWidth
-																	// -
-																	// textPaddedLeft
-																	// -
-																	// textPaddedRight;
+		// -
+		// textPaddedLeft
+		// -
+		// textPaddedRight;
 
 		float currOffset = positionOffset + 0.5f;// positionOffset=0.6
-													// 则currOffset=0.1
+		// 则currOffset=0.1
 		if (currOffset > 1.f) {
 			currOffset -= 1.f;
 		}
@@ -565,13 +563,13 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 		// currOffset -= 1.f;
 		// }
 		final int currCenter = stripWidth / 2 - (int) (currWidth * (currOffset - 0.5f));// stripWidth
-																						// -
-																						// textPaddedRight
-																						// -
-																						// (int)
-																						// (contentWidth
-																						// *
-																						// currOffset);
+		// -
+		// textPaddedRight
+		// -
+		// (int)
+		// (contentWidth
+		// *
+		// currOffset);
 
 		final int currLeft = currCenter - currWidth / 2;
 		final int currRight = currLeft + currWidth;
@@ -594,40 +592,40 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 		int currTop;
 		int nextTop;
 		switch (vgrav) {
-		default:
-		case Gravity.TOP:
-			prevTop = paddingTop + prevTopOffset;
-			currTop = paddingTop + currTopOffset;
-			nextTop = paddingTop + nextTopOffset;
-			break;
-		case Gravity.CENTER_VERTICAL:
-			final int paddedHeight = stripHeight - paddingTop - paddingBottom;
-			final int centeredTop = (paddedHeight - maxTextHeight) / 2;
-			prevTop = centeredTop + prevTopOffset;
-			currTop = centeredTop + currTopOffset;
-			nextTop = centeredTop + nextTopOffset;
-			break;
-		case Gravity.BOTTOM:
-			final int bottomGravTop = stripHeight - paddingBottom - maxTextHeight;
-			prevTop = bottomGravTop + prevTopOffset;
-			currTop = bottomGravTop + currTopOffset;
-			nextTop = bottomGravTop + nextTopOffset;
-			break;
+			default:
+			case Gravity.TOP:
+				prevTop = paddingTop + prevTopOffset;
+				currTop = paddingTop + currTopOffset;
+				nextTop = paddingTop + nextTopOffset;
+				break;
+			case Gravity.CENTER_VERTICAL:
+				final int paddedHeight = stripHeight - paddingTop - paddingBottom;
+				final int centeredTop = (paddedHeight - maxTextHeight) / 2;
+				prevTop = centeredTop + prevTopOffset;
+				currTop = centeredTop + currTopOffset;
+				nextTop = centeredTop + nextTopOffset;
+				break;
+			case Gravity.BOTTOM:
+				final int bottomGravTop = stripHeight - paddingBottom - maxTextHeight;
+				prevTop = bottomGravTop + prevTopOffset;
+				currTop = bottomGravTop + currTopOffset;
+				nextTop = bottomGravTop + nextTopOffset;
+				break;
 		}
 
 		mCurrText.layout(currLeft, currTop, currRight, currTop + mCurrText.getMeasuredHeight());
 
 		final int prevLeft = currLeft - mScaledTextSpacing - prevWidth;// Math.min(paddingLeft,
-																		// currLeft
-																		// -
-																		// mScaledTextSpacing
-																		// -
-																		// prevWidth);
+		// currLeft
+		// -
+		// mScaledTextSpacing
+		// -
+		// prevWidth);
 		mPrevText.layout(prevLeft, prevTop, prevLeft + prevWidth, prevTop + mPrevText.getMeasuredHeight());
 
 		final int nextLeft = currRight + mScaledTextSpacing;// Math.max(stripWidth
-															// - paddingRight -
-															// nextWidth,
+		// - paddingRight -
+		// nextWidth,
 		// currRight + mScaledTextSpacing);
 		mNextText.layout(nextLeft, nextTop, nextLeft + nextWidth, nextTop + mNextText.getMeasuredHeight());
 
@@ -675,7 +673,7 @@ public class WeatherPagerTitleStrip extends ViewGroup implements WeatherViewPage
 			updateTextPositions(mLastKnownCurrentPage, offset, true);
 		}
 		final int indicatorHeight = mCircleIndicator.geIndicatorHeight();
-		mCircleIndicator.layout(0,  b - t -  indicatorHeight * 2, r - l, b - t -indicatorHeight);//indicator底部留有indicatorHeight的边距
+		mCircleIndicator.layout(0, b - t - indicatorHeight * 2, r - l, b - t - indicatorHeight);//indicator底部留有indicatorHeight的边距
 	}
 
 	int getMinHeight() {
