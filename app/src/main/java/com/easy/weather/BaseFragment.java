@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.easy.weather.activity.MainActivity;
 import com.easy.weather.weather.BaseDrawer;
 
 public abstract class BaseFragment extends Fragment {

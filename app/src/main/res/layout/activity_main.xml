@@ -11,7 +11,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".activity.MainActivity">
 
         <com.easy.weather.view.DynamicWeatherView
             android:id="@+id/main_dynamicweatherview"
@@ -43,8 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="64dp"
+            app:fabSize="mini"
+            android:backgroundTint="@color/color_FFFFFF"
+            android:src="@drawable/ic_add_black_48dp"
+            app:borderWidth="0dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 

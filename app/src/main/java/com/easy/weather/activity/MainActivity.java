@@ -1,4 +1,4 @@
-package com.easy.weather;
+package com.easy.weather.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
+import com.easy.weather.BaseFragment;
+import com.easy.weather.R;
+import com.easy.weather.WeatherFragment;
 import com.easy.weather.api.ApiManager;
 import com.easy.weather.utils.UiUtil;
 import com.easy.weather.view.DynamicWeatherView;

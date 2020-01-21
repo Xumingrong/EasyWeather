@@ -13,7 +13,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.easy.weather.MainActivity;
+import com.easy.weather.activity.MainActivity;
 import com.easy.weather.api.ApiManager;
 import com.easy.weather.api.entity.HourlyForecast;
 import com.easy.weather.api.entity.Weather;

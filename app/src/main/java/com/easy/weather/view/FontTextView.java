@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.easy.weather.MainActivity;
+import com.easy.weather.activity.MainActivity;
 
 public class FontTextView extends TextView {
 	public FontTextView(Context context, AttributeSet attrs) {

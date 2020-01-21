@@ -6,7 +6,13 @@
 
 
 
-
-    <color name="color_FFFFFF">#ffffffff</color>
+    <color name="color_00000000">#00000000</color>
+    <color name="color_FFFFFF">#FFFFFFFF</color>
     <color name="color_55FFFFFF">#55FFFFFF</color>
+    <color name="color_5CCC5C">#5CCC5C</color>
+    <color name="color_000000">#000000</color>
+    <color name="color_4A4A4A">#4A4A4A</color>
+    <color name="color_9B9B9B">#9B9B9B</color>
+
+    9B9B9B
 </resources>
